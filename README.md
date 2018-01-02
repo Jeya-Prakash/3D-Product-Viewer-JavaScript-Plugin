@@ -4,4 +4,4 @@
 ![alt text](/sample.jpg)
 # Demo
 <br>
-https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-3D.html
+https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-final.html
