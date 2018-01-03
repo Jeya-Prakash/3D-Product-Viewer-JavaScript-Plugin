@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Deg Product Viewer</title>
+    <script src="pdt360DegViewer.js"></script>
+    <style>
+        body {
+            position: relative;
+        }
+
+        h1, h3, h4 {
+            text-align: center;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        #pdtViewer {
+            width: 67%;
+            height: 450px;
+            margin: 0 auto;
+        }
+
+            #pdtViewer img {
+                padding: 40px 20px;
+                border: 0.5px solid #eee;
+                margin: 20px 0;
+                user-select: none;
+                -moz-user-select: none;
+            }
+
+            #pdtViewer .nxt {
+                left: 85%;
+            }
+
+            #pdtViewer .prev {
+                left: 12%;
+            }
+
+            #pdtViewer button {
+                position: absolute;
+                top: 57%;
+                background: none;
+                border-radius: 30px;
+                padding: 0;
+                font-weight: bold;
+                font-size: 30px;
+                width: 50px;
+                cursor: pointer;
+                height: 52px;
+                box-shadow: 0 6px 15px #aaa;
+            }
+
+                #pdtViewer button:focus {
+                    outline: 0;
+                }
+
+        #dummy {
+            display: none;
+        }
+
+        .loader {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .three-bounce {
+            text-align: center;
+            font-size: 26px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+            .three-bounce div {
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                border-radius: 100%;
+                background-color: #fff;
+                -webkit-animation: bouncedelay 1.4s infinite ease-in-out both;
+                animation: bouncedelay 1.4s infinite ease-in-out both;
+            }
+
+            .three-bounce .one {
+                -webkit-animation-delay: -0.32s;
+                animation-delay: -0.32s;
+            }
+
+            .three-bounce .two {
+                -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s;
+            }
+
+        .bgImg {
+            width: 100%;
+            height: 450px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        @keyframes bouncedelay {
+            0%, 80%, 100% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes bouncedelay {
+            0%, 80%, 100% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+
+        @media screen and (max-width:1030px) {
+            #pdtViewer img {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:992px) {
+            .hidePhone {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width:1250px) {
+            #pdtViewer img {
+                padding: 40px 0;
+            }
+
+            #pdtViewer {
+                width: auto;
+            }
+        }
+
+        .viewer {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>360 Degree Product Viewer</h1>
+    <h4>
+        <em>(Using Plain JavaScript)</em>
+    </h4>
+    <br /><br />
+    <div id="pdtViewer">
+        <h3>Drag over the image</h3>
+        <div id="car1"></div>
+        <h3 class="hidePhone">Mouse Move over the image</h3>
+        <div id="car2"></div>
+        <h3 class="hidePhone">Scroll over the image</h3>
+        <div id="car3"></div>
+        <h3 class="hidePhone">Keypress Left and Right Arrows in Keyboard </h3>
+        <div id="car4"></div>
+    </div>
+    <div id="dummy"></div>
+    <script>
+        //pdt360DegViewer(imgDivid, count, path, imgType, drag, mouseMove, scroll, keyNavigation);
+        pdt360DegViewer('car1', 51, './img/', 'png', true, false, false, false);
+        pdt360DegViewer('car2', 51, './img/', 'png', false, true, false, false);
+        pdt360DegViewer('car3', 51, './img/', 'png', false, false, true, false);
+        pdt360DegViewer('car4', 51, './img/', 'png', false, false, false, true);
+    </script>
+</body>
+</html>
