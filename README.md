@@ -28,6 +28,3 @@ pdt360DegViewer('car0', 51, './img/', 'png', true, true, false, false, false, fa
   //keyNavigation--> enables keypress navigation, if set to true
   //scroll--> enables scroll over image, if set to true
 ```
-<br>
-<strong>Note:</strong> For Mobile, Only drag event is possible
-
