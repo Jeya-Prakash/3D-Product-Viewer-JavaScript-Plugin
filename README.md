@@ -5,7 +5,7 @@
 <br>
 https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html
 <br>
-![alt text](/sample-pic.jpg)
+![alt text](/sample-pic.png)
 <br><br>
 
   <strong>Options:</strong>
