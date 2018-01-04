@@ -13,8 +13,7 @@ https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-
 ```js
 
 pdt360DegViewer('car0', 51, './img/', 'png', true, true, false, false, false, false, false);    
-//pdt360DegViewer(imgDivid, count, path, imgType, playable, autoPlay, drag, mouseMove, 
-                                                   buttonNavigation, keyNavigation, scroll);
+//pdt360DegViewer(imgDivid, count, path, imgType, playable, autoPlay, drag, mouseMove, buttonNavigation, keyNavigation, scroll);
 
   //imgDivid--> ID of div on which img is going to append. Ex: 'car'
   
