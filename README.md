@@ -4,7 +4,7 @@
 ##### [Live Demo](https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html) - (https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html)
 
 -------------
-![alt text](/sample-pic.png)
+[![3D Product Viewer JavaScript Plugin](/sample-pic.png)](https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html)
 <br><br>
 
   <strong>Options:</strong>
