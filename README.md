@@ -5,7 +5,7 @@
 <br>
 
 <br>
-![[alt text](/sample-pic.png)](https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html)
+![alt text](/sample-pic.png)
 <br><br>
 
   <strong>Options:</strong>
