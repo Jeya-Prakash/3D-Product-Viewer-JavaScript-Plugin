@@ -1,7 +1,7 @@
 # 3D Product Viewer JavaScript Plugin
 360 Degree Product Viewer using plain JavaScript
 <br><br>
-##### [Live Demo](https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html)
+##### [Live Demo](https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html) - (https://rawgit.com/Jeya-Prakash/3D-Product-Viewer-JavaScript-Plugin/master/demo-html.html)
 
 -------------
 ![alt text](/sample-pic.png)
