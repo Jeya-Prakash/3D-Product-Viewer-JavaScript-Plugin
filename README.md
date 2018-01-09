@@ -36,3 +36,8 @@ pdt360DegViewer('car0', 51, './img/', 'png', true, true, false, false, false, fa
   
   //scroll--> enables scroll over image, if set to true
 ```
+-------------
+## Note:
+<br>File Name should be in the form of <strong>"1.jpg"/"1.png"</strong> starting from 1 to total number of images 
+<br>Example: 1-18(1.jpg, 2.jpg, 3.jpg.....17.jpg, 18.jpg).
+<br> File extension can be anything- jpg,gif,png,svf
