@@ -3,8 +3,7 @@
 <br><br>
 # Live Demo
 http://goo.gl/C4tfs9
-
--------------
+<br><br>
 [![3D Product Viewer JavaScript Plugin](/sample-pic.png)](http://goo.gl/C4tfs9)
 <br><br>
 
