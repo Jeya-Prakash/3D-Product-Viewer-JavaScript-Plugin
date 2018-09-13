@@ -13,7 +13,27 @@ function init360Viewer(o) {
         return;
     }
 
-    pdt360DegViewer(o.id, o.count, o.path, o.imgType, false, false, true, true, true, true, true);
+    // Consolidate aliases.
+    o.draggable = o.draggable || o.drag;
+    o.autoPlay = o.autoPlay || o.autoplay;
+    o.buttons = o.buttons || o.buttonNavigation;
+    o.keys = o.keys || o.keyNavigation;
+    o.scroll = o.scroll || o.scrollNavigation;
+
+    // Initialize viewer.
+    pdt360DegViewer(
+        o.id,
+        o.count,
+        o.path,
+        o.imgType,
+        o.playable,
+        o.autoPlay,
+        o.draggable,
+        o.mouseMove,
+        o.buttons,
+        o.keys,
+        o.scroll
+    );
 }
 
 function initError(prop, message) {
@@ -34,11 +54,12 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
         '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>'
 
     if (call == 1) {
-        // Get or add a dummy element.
+        // Get dummy element or add a one if none exist.
         var dummy = document.getElementById('dummy');
         if (!dummy) {
             dummy = document.createElement('div');
             dummy.id = 'dummy';
+            dummy.style.cssText = 'display: none;';
             mainDiv.parentNode.appendChild(dummy);
         }
         for (var k = 1; k <= n; k++) {
@@ -88,6 +109,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 drag = true;
                 mouseEvent();
             }
+
             function mouseEvent() {
                 img.addEventListener('mousemove', function (e) {
                     (drag) ? logic(this, e) : null;
