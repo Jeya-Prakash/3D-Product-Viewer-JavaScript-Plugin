@@ -1,4 +1,5 @@
-function init360Viewer(o) {
+function init360Viewer(options) {
+    var o = options;
     // Some options are required for the viewer to work.
     if (!o.id || !o.count || !o.path || !o.imgType) {
         if (!o.id)
@@ -54,7 +55,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
         '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>'
 
     if (call == 1) {
-        // Get dummy element or add a one if none exist.
+        // Get dummy element or add one if none exist.
         var dummy = document.getElementById('dummy');
         if (!dummy) {
             dummy = document.createElement('div');
