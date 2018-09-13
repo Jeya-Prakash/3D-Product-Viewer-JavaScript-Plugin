@@ -1,3 +1,25 @@
+function init360Viewer(o) {
+    // Some options are required for the viewer to work.
+    if (!o.id || !o.count || !o.path || !o.imgType) {
+        if (!o.id)
+            initError('id', 'Must specify the id of the wrapping element.');
+        if (!o.count)
+            initError('count', 'Must specify amount of images to cycle.');
+        if (!o.path)
+            initError('path', 'Must specify path to images.');
+        if (!o.imgType)
+            initError('imgType', 'Must specify the extension of images.');
+        // If any of the options are not satisfied, return.
+        return;
+    }
+
+    pdt360DegViewer(o.id, o.count, o.path, o.imgType, false, false, true, true, true, true, true);
+}
+
+function initError(prop, message) {
+    console.error('360Viewer encountered an error: Missing "' + prop + '" property. ' + message);
+}
+
 var call = 0;
 
 function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, buttons, keys, scroll) {
@@ -9,12 +31,20 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
     mainDiv.className = 'viewer';
     mainDiv.innerHTML += `<img class="${id} ${playable ? 'playable ' : ''}${autoPlay ? 'autoPlay ' : ''}${draggable ? 'draggable ' : ''}${mouseMove ? 'mouseMove ' : ''}${buttons ? 'buttons ' : ''}${keys ? 'keys ' : ''}${scroll ? 'scroll ' : ''}" draggable="false" src='${p}${i}.${t}'>`;
     mainDiv.innerHTML +=
-           '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>'
+        '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>'
 
-    if (call == 1)
-        for (var k = 1; k <= n; k++) {
-            document.getElementById('dummy').innerHTML += `<img src='${p}${k}.${t}'>`;
+    if (call == 1) {
+        // Get or add a dummy element.
+        var dummy = document.getElementById('dummy');
+        if (!dummy) {
+            dummy = document.createElement('div');
+            dummy.id = 'dummy';
+            mainDiv.parentNode.appendChild(dummy);
         }
+        for (var k = 1; k <= n; k++) {
+            dummy.innerHTML += `<img src='${p}${k}.${t}'>`;
+        }
+    }
 
     var img = document.querySelector(`#${id} .${id}`);
 
@@ -37,6 +67,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 move = [];
             });
         }
+
         //For Non-Touch Devices
         function nonTouch() {
             touch = false;
@@ -65,6 +96,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                     move = [];
                 });
             }
+
             if (scroll) {
                 img.addEventListener('wheel', function (e) {
                     e.preventDefault();
@@ -82,6 +114,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 };
             }
         }
+
         function logic(el, e) {
             j++;
             var x = touch ? e.touches[0].clientX : e.clientX;
@@ -99,6 +132,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                     prev(el);
             }
         }
+
         if (buttons) {
             var btnsDiv = document.createElement('div');
             btnsDiv.className = 'btnDiv navDiv';
@@ -232,6 +266,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
         } else
             e.src = `${p}${--i}.${t}`;
     }
+
     function nxt(e) {
         if (i >= n) {
             i = 1;
@@ -240,8 +275,9 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
         } else
             e.src = `${p}${++i}.${t}`;
     }
+
     function loaderNone(id) {
-        window.addEventListener('load',function(){
+        window.addEventListener('load', function () {
             document.querySelector(`#${id} .loader`).style.display = 'none';
             if (autoPlay) {
                 pause = false;
