@@ -44,7 +44,7 @@ function initError(prop, message) {
 var call = 0;
 
 function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, buttons, keys, scroll) {
-    var options = [
+    var state = [
         call + ' ' + id,
         (playable ? 'playable' : ''),
         (autoPlay ? 'autoPlay' : ''),
@@ -54,7 +54,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
         (keys ? 'keys' : ''),
         (scroll ? 'scroll' : '')
     ];
-    console.log(options.join(' ').replace(/\s+/g, ' '));
+    console.log(state.join(' ').replace(/\s+/g, ' '));
 
     call++;
     loaderNone(id);
