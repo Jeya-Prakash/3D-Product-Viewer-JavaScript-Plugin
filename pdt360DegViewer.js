@@ -1,22 +1,92 @@
+function init360Viewer(options) {
+    var o = options;
+    // Some options are required for the viewer to work.
+    if (!o.id || !o.count || !o.path || !o.imgType) {
+        if (!o.id)
+            initError('id', 'Must specify the id of the wrapping element.');
+        if (!o.count)
+            initError('count', 'Must specify amount of images to cycle.');
+        if (!o.path)
+            initError('path', 'Must specify path to images.');
+        if (!o.imgType)
+            initError('imgType', 'Must specify the extension of images.');
+        // If any of the options are not satisfied, return.
+        return;
+    }
+
+    // Consolidate aliases.
+    o.draggable = o.draggable || o.drag;
+    o.autoPlay = o.autoPlay || o.autoplay;
+    o.buttons = o.buttons || o.buttonNavigation;
+    o.keys = o.keys || o.keyNavigation;
+    o.scroll = o.scroll || o.scrollNavigation;
+
+    // Initialize viewer.
+    pdt360DegViewer(
+        o.id,
+        o.count,
+        o.path,
+        o.imgType,
+        o.playable,
+        o.autoPlay,
+        o.draggable,
+        o.mouseMove,
+        o.buttons,
+        o.keys,
+        o.scroll
+    );
+}
+
+function initError(prop, message) {
+    console.error('360Viewer encountered an error: Missing "' + prop + '" property. ' + message);
+}
+
 var call = 0;
 
 function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, buttons, keys, scroll) {
-    console.log(`${call}-${id}-${playable ? 'playable ' : ''}${autoPlay ? 'autoPlay ' : ''}${draggable ? 'draggable ' : ''}${mouseMove ? 'mouseMove ' : ''}${buttons ? 'buttons ' : ''}${keys ? 'keys' : ''}${scroll ? 'scroll ' : ''}`);
+    var state = [
+        call + ' ' + id,
+        (playable ? 'playable' : ''),
+        (autoPlay ? 'autoPlay' : ''),
+        (draggable ? 'draggable' : ''),
+        (mouseMove ? 'mouseMove' : ''),
+        (buttons ? 'buttons' : ''),
+        (keys ? 'keys' : ''),
+        (scroll ? 'scroll' : '')
+    ];
+    console.log(state.join(' ').replace(/\s+/g, ' '));
+
     call++;
     loaderNone(id);
     var i = 1, j = 0, move = [],
-        mainDiv = document.querySelector(`#${id}`);
+        mainDiv = document.querySelector('#' + id);
     mainDiv.className = 'viewer';
-    mainDiv.innerHTML += `<img class="${id} ${playable ? 'playable ' : ''}${autoPlay ? 'autoPlay ' : ''}${draggable ? 'draggable ' : ''}${mouseMove ? 'mouseMove ' : ''}${buttons ? 'buttons ' : ''}${keys ? 'keys ' : ''}${scroll ? 'scroll ' : ''}" draggable="false" src='${p}${i}.${t}'>`;
-    mainDiv.innerHTML +=
-           '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>'
+    mainDiv.innerHTML += '<img class="' + id
+        + (playable ? ' playable' : '')
+        + (autoPlay ? ' autoPlay' : '')
+        + (draggable ? ' draggable' : '')
+        + (mouseMove ? ' mouseMove' : '')
+        + (buttons ? ' buttons' : '')
+        + (keys ? ' keys' : '')
+        + (scroll ? ' scroll' : '')
+        + ' " draggable="false" src="' + src(p, i, t) + '">';
+    mainDiv.innerHTML += '<div class="loader"><div class="three-bounce"><div class="one"></div><div class="two"></div><div class="three"></div></div></div>';
 
-    if (call == 1)
-        for (var k = 1; k <= n; k++) {
-            document.getElementById('dummy').innerHTML += `<img src='${p}${k}.${t}'>`;
+    if (call == 1) {
+        // Get dummy element or add one if none exist.
+        var dummy = document.getElementById('dummy');
+        if (!dummy) {
+            dummy = document.createElement('div');
+            dummy.id = 'dummy';
+            dummy.style.cssText = 'display: none;';
+            mainDiv.parentNode.appendChild(dummy);
         }
+        for (var k = 1; k <= n; k++) {
+            dummy.innerHTML += '<img src="' + src(p, k, t) + '">';
+        }
+    }
 
-    var img = document.querySelector(`#${id} .${id}`);
+    var img = document.querySelector('#' + id + ' .' + id);
 
     if (!playable && !autoPlay) {
         var touch = false;
@@ -37,6 +107,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 move = [];
             });
         }
+
         //For Non-Touch Devices
         function nonTouch() {
             touch = false;
@@ -57,6 +128,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 drag = true;
                 mouseEvent();
             }
+
             function mouseEvent() {
                 img.addEventListener('mousemove', function (e) {
                     (drag) ? logic(this, e) : null;
@@ -65,6 +137,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                     move = [];
                 });
             }
+
             if (scroll) {
                 img.addEventListener('wheel', function (e) {
                     e.preventDefault();
@@ -82,6 +155,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 };
             }
         }
+
         function logic(el, e) {
             j++;
             var x = touch ? e.touches[0].clientX : e.clientX;
@@ -99,6 +173,7 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                     prev(el);
             }
         }
+
         if (buttons) {
             var btnsDiv = document.createElement('div');
             btnsDiv.className = 'btnDiv navDiv';
@@ -159,7 +234,8 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
                 speed = 50;
                 right = true;
                 left = false;
-                this.parentNode.parentNode.querySelector('img').src = `${p}${i = 1}.${t}`;
+                i = 1;
+                this.parentNode.parentNode.querySelector('img').src = src(p, i, t);
             });
 
             var leftBtn = document.createElement('button');
@@ -227,26 +303,32 @@ function pdt360DegViewer(id, n, p, t, playable, autoPlay, draggable, mouseMove, 
     function prev(e) {
         if (i <= 1) {
             i = n;
-            e.src = `${p}${--i}.${t}`;
+            e.src = src(p, --i, t);
             nxt(e);
         } else
-            e.src = `${p}${--i}.${t}`;
+            e.src = src(p, --i, t);
     }
+
     function nxt(e) {
         if (i >= n) {
             i = 1;
-            e.src = `${p}${++i}.${t}`;
+            e.src = src(p, ++i, t);
             prev(e);
         } else
-            e.src = `${p}${++i}.${t}`;
+            e.src = src(p, ++i, t);
     }
+
     function loaderNone(id) {
-        window.addEventListener('load',function(){
-            document.querySelector(`#${id} .loader`).style.display = 'none';
+        window.addEventListener('load', function () {
+            document.querySelector('#' + id + ' .loader').style.display = 'none';
             if (autoPlay) {
                 pause = false;
                 play();
             }
         });
     }
+}
+
+function src(path, i, type) {
+    return path + i + '.' + type;
 }
